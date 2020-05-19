@@ -19,23 +19,28 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+
     @BindView(R.id.main_navigation_bar)
     public BottomNavigationView mNavigationView;
+    //四个Fragment
     private HomeFragment mHomeFragment;
     private SelectedFragment mSelectFragment;
     private RedPacketFragment mRedPacket;
     private SearchFragment mSearch;
+
     private FragmentManager mFragmentManager;
+    private Unbinder mBind;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        mBind = ButterKnife.bind(this);
         initFragment();
         initListener();
     }
@@ -61,19 +66,19 @@ public class MainActivity extends AppCompatActivity {
                 int itemId = item.getItemId();
                 switch (itemId) {
                     case R.id.home:
-                        LogUtil.d(MainActivity.class, "切换到首页");
+                        LogUtil.d(this, "切换到首页");
                         switchFragment(mHomeFragment);
                         break;
                     case R.id.selected:
-                        LogUtil.d(MainActivity.class, "切换到精选");
+                        LogUtil.d(this, "切换到精选");
                         switchFragment(mSelectFragment);
                         break;
                     case R.id.red_packet:
-                        LogUtil.d(MainActivity.class, "切换到红包");
+                        LogUtil.d(this, "切换到红包");
                         switchFragment(mRedPacket);
                         break;
                     case R.id.search:
-                        LogUtil.d(MainActivity.class, "切换到搜索");
+                        LogUtil.d(this, "切换到搜索");
                         switchFragment(mSearch);
                         break;
                     default:
@@ -92,5 +97,13 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         transaction.replace(R.id.main_page_container, fragment);
         transaction.commit();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mBind != null) {
+            mBind.unbind();
+        }
     }
 }

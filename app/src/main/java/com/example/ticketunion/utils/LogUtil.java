@@ -28,32 +28,33 @@ public class LogUtil {
         sIsRelease = isRelease;
     }
 
-    public static void d(Class clazz, String content) {
+    public static void d(Object object, String content) {
         if (!sIsRelease) {
-            Log.d("[" + sTAG + "]" + clazz.getSimpleName(), content);
+            Log.d("[" + sTAG + "]" + object.getClass().getSimpleName(), content);
         }
     }
 
-    public static void v(Class clazz, String content) {
+    public static void v(Object object, String content) {
         if (!sIsRelease) {
-            Log.v("[" + sTAG + "]" + clazz.getSimpleName(), content);
+            Log.d("[" + sTAG + "]" + object.getClass().getSimpleName(), content);
         }
     }
 
-    public static void i(Class clazz, String content) {
+    public static void i(Object object, String content) {
         if (!sIsRelease) {
-            Log.i("[" + sTAG + "]" + clazz.getSimpleName(), content);
+            Log.d("[" + sTAG + "]" + object.getClass().getSimpleName(), content);
         }
     }
 
-    public static void w(Class clazz, String content) {
+    public static void w(Object object, String content) {
         if (!sIsRelease) {
-            Log.w("[" + sTAG + "]" + clazz.getSimpleName(), content);        }
+            Log.d("[" + sTAG + "]" + object.getClass().getSimpleName(), content);
+        }
     }
 
-    public static void e(Class clazz, String content) {
+    public static void e(Object object, String content) {
         if (!sIsRelease) {
-            Log.e("[" + sTAG + "]" + clazz.getSimpleName(), content);
+            Log.d("[" + sTAG + "]" + object.getClass().getSimpleName(), content);
         }
     }
 }
