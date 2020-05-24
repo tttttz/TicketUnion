@@ -30,7 +30,7 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        String title = categoryList.get(position).getTitle();
+        //String title = categoryList.get(position).getTitle();
         //LogUtil.d(this, "title == > " + title);
         return categoryList.get(position).getTitle();
     }
@@ -38,7 +38,9 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        HomePagerFragment homePagerFragment = new HomePagerFragment();
+        LogUtil.d(this, "position == > " + position);
+        Categories.DataBean category = categoryList.get(position);
+        HomePagerFragment homePagerFragment = HomePagerFragment.newInstance(category);
         return homePagerFragment;
     }
 

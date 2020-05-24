@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.ticketunion"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -43,7 +43,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
-
+    implementation 'com.lcodecorex:tkrefreshlayout:1.0.7'
     //基础工具库
     implementation "com.github.tamsiree.RxTool:RxKit:v2.4.1"
     //UI库

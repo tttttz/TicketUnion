@@ -1,6 +1,8 @@
 package com.example.ticketunion.ui.fragment;
 
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.viewpager.widget.ViewPager;
 
@@ -39,16 +41,28 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
     }
 
     @Override
+    protected View loadRootView(LayoutInflater inflater, ViewGroup container) {
+        return inflater.inflate(R.layout.fragment_base_home, container, false);
+    }
+
+    @Override
     protected void initPresenter() {
         //创建Presenter
         mHomePresenter = new HomePresenterImpl();
-        mHomePresenter.registerCallback(this);
+        mHomePresenter.registerViewCallback(this);
     }
 
     @Override
     protected void loadData() {
         //加载数据
         mHomePresenter.getCategories();
+    }
+
+    @Override
+    protected void onRetryClick() {
+        if (mHomePresenter != null) {
+            mHomePresenter.getCategories();
+        }
     }
 
     /**
@@ -59,12 +73,14 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
     public void onCategoriesLoaded(Categories categories) {
         setupState(State.SUCCESS);
         if (mHomePagerAdapter != null) {
+            //这里可以直接将所有页面加载出来
+            //homePager.setOffscreenPageLimit(categories.getData().size());
             mHomePagerAdapter.setCategories(categories);
         }
     }
 
     @Override
-    public void onNetWorkError() {
+    public void onError() {
         setupState(State.ERROR);
     }
 
@@ -82,7 +98,7 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
     protected void release() {
         //取消注册回调接口
         if (mHomePresenter != null) {
-            mHomePresenter.unregisterCallback(this);
+            mHomePresenter.unregisterViewCallback(this);
         }
     }
 }

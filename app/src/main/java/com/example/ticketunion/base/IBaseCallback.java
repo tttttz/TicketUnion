@@ -7,4 +7,9 @@ package com.example.ticketunion.base;
  * God bless my code!
  */
 public interface IBaseCallback {
+
+    void onError();
+    void onLoading();
+    void onEmpty();
+
 }

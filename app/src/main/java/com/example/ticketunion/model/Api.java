@@ -1,9 +1,11 @@
 package com.example.ticketunion.model;
 
 import com.example.ticketunion.model.domain.Categories;
+import com.example.ticketunion.model.domain.HomePagerContent;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Url;
 
 /**
  * @ProjectName: TicketUnion
@@ -15,4 +17,7 @@ public interface Api {
 
     @GET("discovery/categories")
     Call<Categories> getCategories();
+
+    @GET
+    Call<HomePagerContent> getHomePagerContent(@Url String url);
 }

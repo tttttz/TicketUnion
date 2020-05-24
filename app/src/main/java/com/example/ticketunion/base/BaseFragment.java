@@ -11,8 +11,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.ticketunion.R;
+import com.example.ticketunion.utils.LogUtil;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public abstract class BaseFragment extends Fragment {
@@ -24,27 +26,48 @@ public abstract class BaseFragment extends Fragment {
     private View mEmptyView;
 
     public enum State {
-        NONE,LOADING,SUCCESS,ERROR,EMPTY
+        NONE, LOADING, SUCCESS, ERROR, EMPTY
     }
+
     private Unbinder mBind;
     private FrameLayout mBaseContainer;
+
+    @OnClick(R.id.network_error_tips)
+    public void retry() {
+        //点击重新加载
+        LogUtil.d(this, "click retry");
+        onRetryClick();
+    }
+
+    /**
+     * 如果子类fragment需要网络错误后点击重试，则重写该方法
+     */
+    protected void onRetryClick() {
+
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_base, container, false);
+        View rootView = loadRootView(inflater, container);
         mBaseContainer = rootView.findViewById(R.id.base_container);
         loadStatusView(inflater, container);
         mBind = ButterKnife.bind(this, rootView);
         initView(rootView);
+        initListener();
         initPresenter();
         loadData();
         return rootView;
     }
 
+    protected void initListener() {
+        //初始化监听器
+    }
+
     /**
      * 负责加载各种状态的界面
+     *
      * @param inflater
      * @param container
      */
@@ -72,15 +95,17 @@ public abstract class BaseFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_error, container, false);
     }
 
-    public void setupState(State status){
+    public void setupState(State status) {
         currentState = status;
         mSuccessView.setVisibility(currentState == State.SUCCESS ? View.VISIBLE : View.GONE);
         mLoadView.setVisibility(currentState == State.LOADING ? View.VISIBLE : View.GONE);
         mErrorView.setVisibility(currentState == State.ERROR ? View.VISIBLE : View.GONE);
         mEmptyView.setVisibility(currentState == State.EMPTY ? View.VISIBLE : View.GONE);
     }
+
     /**
      * 负责加载loading界面
+     *
      * @param inflater
      * @param container
      * @return
@@ -92,6 +117,7 @@ public abstract class BaseFragment extends Fragment {
 
     /**
      * 负责加载成功界面
+     *
      * @param inflater
      * @param container
      * @return
@@ -101,7 +127,7 @@ public abstract class BaseFragment extends Fragment {
         return inflater.inflate(resId, container, false);
     }
 
-    protected void initView(View rootView){
+    protected void initView(View rootView) {
         //留给子类的模板方法
     }
 
@@ -114,9 +140,8 @@ public abstract class BaseFragment extends Fragment {
         //用来加载数据
     }
 
-    private View loadRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        int resId = getRootViewResId();
-        return inflater.inflate(resId, container, false);
+    protected View loadRootView(LayoutInflater inflater, ViewGroup container) {
+        return inflater.inflate(R.layout.fragment_base, container, false);
     }
 
     @Override
@@ -134,6 +159,7 @@ public abstract class BaseFragment extends Fragment {
 
     /**
      * 获取Fragment的resId
+     *
      * @return
      */
     protected abstract int getRootViewResId();

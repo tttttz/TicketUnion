@@ -1,5 +1,6 @@
 package com.example.ticketunion.view;
 
+import com.example.ticketunion.base.IBaseCallback;
 import com.example.ticketunion.model.domain.Categories;
 
 /**
@@ -8,9 +9,8 @@ import com.example.ticketunion.model.domain.Categories;
  * @CreateDate: 2020/5/18 16:30
  * God bless my code!
  */
-public interface IHomeCallback {
+public interface IHomeCallback extends IBaseCallback {
+
     void onCategoriesLoaded(Categories categories);
-    void onNetWorkError();
-    void onLoading();
-    void onEmpty();
+    
 }

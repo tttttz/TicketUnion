@@ -55,7 +55,7 @@ public class HomePresenterImpl implements IHomePresenter {
                 } else {
                     LogUtil.d(HomePresenterImpl.this, "请求失败......");
                     if (mCallback != null) {
-                        mCallback.onNetWorkError();
+                        mCallback.onError();
                     }
                 }
             }
@@ -65,19 +65,19 @@ public class HomePresenterImpl implements IHomePresenter {
                 //加载失败
                 LogUtil.d(HomePresenterImpl.this, "请求错误......" + t);
                 if (mCallback != null) {
-                    mCallback.onNetWorkError();
+                    mCallback.onError();
                 }
             }
         });
     }
 
     @Override
-    public void registerCallback(IHomeCallback callback) {
+    public void registerViewCallback(IHomeCallback callback) {
         this.mCallback = callback;
     }
 
     @Override
-    public void unregisterCallback(IHomeCallback callback) {
+    public void unregisterViewCallback(IHomeCallback callback) {
         mCallback = null;
     }
 }

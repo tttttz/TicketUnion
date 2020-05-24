@@ -8,28 +8,19 @@ package com.example.ticketunion.presenter;
  */
 
 
+import com.example.ticketunion.base.IBasePresenter;
 import com.example.ticketunion.view.IHomeCallback;
 
 /**
  * Home主页需要实现的逻辑方法
  */
-public interface IHomePresenter {
+public interface IHomePresenter extends IBasePresenter<IHomeCallback> {
 
     /**
      * 获取商品分类
      */
     void getCategories();
 
-    /**
-     * 注册UI通知接口
-     * @param callback
-     */
-    void registerCallback(IHomeCallback callback);
 
-    /**
-     * 取消注册UI通知接口
-     * @param callback
-     */
-    void unregisterCallback(IHomeCallback callback);
 
 }
