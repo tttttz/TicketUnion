@@ -3,7 +3,6 @@ package com.example.ticketunion.ui.fragment;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,13 +20,12 @@ import com.example.ticketunion.presenter.ICategoryPagerPresenter;
 import com.example.ticketunion.presenter.impl.CategoryPagePresenterImpl;
 import com.example.ticketunion.ui.adapter.HomePagerContentAdapter;
 import com.example.ticketunion.ui.adapter.LooperPagerAdapter;
+import com.example.ticketunion.ui.custom.TbNestedScrollView;
 import com.example.ticketunion.utils.Constants;
 import com.example.ticketunion.utils.LogUtil;
 import com.example.ticketunion.utils.SizeUtils;
 import com.example.ticketunion.utils.ToastUtil;
 import com.example.ticketunion.view.ICategoryPagerCallback;
-import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
-import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 
 import java.util.List;
 
@@ -57,11 +55,17 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
     @BindView(R.id.looper_point_container)
     public LinearLayout looperPointContainer;
 
-    @BindView(R.id.home_pager_refresh)
-    public TwinklingRefreshLayout twinklingRefreshLayout;
+//    @BindView(R.id.home_pager_refresh)
+//    public TwinklingRefreshLayout twinklingRefreshLayout;
+
+    @BindView(R.id.home_pager_nested_scroller)
+    public TbNestedScrollView homePagerNestedView;
 
     @BindView(R.id.home_pager_parent)
     public LinearLayout homePagerParent;
+
+    @BindView(R.id.home_pager_header_container)
+    public LinearLayout homeHeaderContainer;
 
     private HomePagerContentAdapter mContentAdapter;
     private LooperPagerAdapter mLooperPagerAdapter;
@@ -123,8 +127,8 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         //设置适配器
         looperPager.setAdapter(mLooperPagerAdapter);
         //设置refresh相关内容
-        twinklingRefreshLayout.setEnableRefresh(false);
-        twinklingRefreshLayout.setEnableLoadmore(true);
+//        twinklingRefreshLayout.setEnableRefresh(false);
+//        twinklingRefreshLayout.setEnableLoadmore(true);
     }
 
     @Override
@@ -157,11 +161,11 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         homePagerParent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                if (homePagerParent == null) {
-                    return;
-                }
+                int headerHeight = homeHeaderContainer.getMeasuredHeight();
+                LogUtil.d(HomePagerFragment.this, "headerHeight ==> " + headerHeight);
+                homePagerNestedView.setHeaderHeight(headerHeight);
                 int measuredHeight = homePagerParent.getMeasuredHeight();
-                ViewGroup.LayoutParams layoutParams = mContentList.getLayoutParams();
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mContentList.getLayoutParams();
                 layoutParams.height = measuredHeight;
                 mContentList.setLayoutParams(layoutParams);
                 if (measuredHeight != 0) {
@@ -171,14 +175,14 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         });
 
         //设置加载更多组件的监听
-        twinklingRefreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
-            @Override
-            public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
-                if (mCategoryPagePresenter != null) {
-                    mCategoryPagePresenter.loadMore(mMaterialId);
-                }
-            }
-        });
+//        twinklingRefreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
+//            @Override
+//            public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
+//                if (mCategoryPagePresenter != null) {
+//                    mCategoryPagePresenter.loadMore(mMaterialId);
+//                }
+//            }
+//        });
     }
 
     //切换指示器
@@ -233,17 +237,17 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
     @Override
     public void onLoadMoreError() {
         ToastUtil.showToast("网络异常，请稍后重试...");
-        if (twinklingRefreshLayout != null) {
-            twinklingRefreshLayout.finishLoadmore();;
-        }
+//        if (twinklingRefreshLayout != null) {
+//            twinklingRefreshLayout.finishLoadmore();;
+//        }
     }
 
     @Override
     public void onLoadMoreEmpty() {
         ToastUtil.showToast("没有更多的数据...");
-        if (twinklingRefreshLayout != null) {
-            twinklingRefreshLayout.finishLoadmore();
-        }
+//        if (twinklingRefreshLayout != null) {
+//            twinklingRefreshLayout.finishLoadmore();
+//        }
     }
 
     @Override
@@ -251,9 +255,9 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         //将数据添加到适配器的底部
         mContentAdapter.addData(contents);
         //结束刷新
-        if (twinklingRefreshLayout != null) {
-            twinklingRefreshLayout.finishLoadmore();
-        }
+//        if (twinklingRefreshLayout != null) {
+//            twinklingRefreshLayout.finishLoadmore();
+//        }
         ToastUtil.showToast("加载了" + contents.size() + "条数据");
     }
 

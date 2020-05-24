@@ -15,6 +15,10 @@ import androidx.core.widget.NestedScrollView;
  * God bless my code!
  */
 public class TbNestedScrollView extends NestedScrollView {
+
+    private int mHeaderHeight = 486;
+    private int mOriginScroll = 0;
+
     public TbNestedScrollView(@NonNull Context context) {
         super(context);
     }
@@ -27,9 +31,24 @@ public class TbNestedScrollView extends NestedScrollView {
         super(context, attrs, defStyleAttr);
     }
 
-    @Override
-    public void onNestedScroll(@NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type, @NonNull int[] consumed) {
-        super.onNestedScroll(target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type, consumed);
+    public void setHeaderHeight(int headerHeight) {
+        this.mHeaderHeight = headerHeight;
+    }
 
+    @Override
+    public void onNestedPreScroll(@NonNull View target, int dx, int dy, @NonNull int[] consumed, int type) {
+        //dy 纵向滑动值
+        if (mOriginScroll < mHeaderHeight) {
+            scrollBy(dx, dy);
+            consumed[0] = dx;
+            consumed[1] = dy;
+        }
+        super.onNestedPreScroll(target, dx, dy, consumed, type);
+    }
+
+    @Override
+    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+        mOriginScroll = t;
+        super.onScrollChanged(l, t, oldl, oldt);
     }
 }
