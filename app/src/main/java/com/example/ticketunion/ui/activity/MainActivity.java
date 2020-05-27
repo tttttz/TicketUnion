@@ -103,6 +103,9 @@ public class MainActivity extends BaseActivity {
      * @param fragment
      */
     private void switchFragment(BaseFragment fragment) {
+        if (lastFragment == fragment) {
+            return;
+        }
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
         if (!fragment.isAdded()) {

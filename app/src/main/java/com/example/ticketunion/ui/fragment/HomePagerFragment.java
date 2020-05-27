@@ -3,6 +3,7 @@ package com.example.ticketunion.ui.fragment;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
@@ -332,7 +333,12 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
     private void handleItem(HomePagerContent.DataBean item) {
         //拿到presenter加载数据
         String title = item.getTitle();
-        String url = item.getClick_url();
+        //这个是优惠券的地址
+        String url = item.getCoupon_click_url();
+        if (TextUtils.isEmpty(url)) {
+            //若没有优惠券了,则使用详情地址
+            url = item.getClick_url();
+        }
         String cover = item.getPict_url();
         TicketPresentImpl ticketPresent = PresenterManager.getInstance().getTicketPresent();
         ticketPresent.getTicket(title, url, cover);
