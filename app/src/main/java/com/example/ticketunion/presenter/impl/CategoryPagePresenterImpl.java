@@ -35,24 +35,7 @@ public class CategoryPagePresenterImpl implements ICategoryPagerPresenter {
 
     private List<ICategoryPagerCallback> mCallbacks = new ArrayList<>();
 
-    private static CategoryPagePresenterImpl sInstance = null;
     private Integer mCurrentPage;
-
-    /**
-     * 单例
-     *
-     * @return
-     */
-    public static CategoryPagePresenterImpl getInstance() {
-        if (sInstance == null) {
-            sInstance = new CategoryPagePresenterImpl();
-        }
-        return sInstance;
-    }
-
-    private CategoryPagePresenterImpl() {
-
-    }
 
     /**
      * 根据id获取内容

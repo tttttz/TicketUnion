@@ -10,8 +10,8 @@ import com.example.ticketunion.R;
 import com.example.ticketunion.base.BaseFragment;
 import com.example.ticketunion.model.domain.Categories;
 import com.example.ticketunion.presenter.IHomePresenter;
-import com.example.ticketunion.presenter.impl.HomePresenterImpl;
 import com.example.ticketunion.ui.adapter.HomePagerAdapter;
+import com.example.ticketunion.utils.PresenterManager;
 import com.example.ticketunion.view.IHomeCallback;
 import com.google.android.material.tabs.TabLayout;
 
@@ -48,7 +48,7 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
     @Override
     protected void initPresenter() {
         //创建Presenter
-        mHomePresenter = new HomePresenterImpl();
+        mHomePresenter = PresenterManager.getInstance().getHomePresenter();
         mHomePresenter.registerViewCallback(this);
     }
 

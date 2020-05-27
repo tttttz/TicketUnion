@@ -33,14 +33,12 @@ public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerConte
 
 
     private List<HomePagerContent.DataBean> mData = new ArrayList<>();
-
-    private static int count = 1;
+    private OnListItemClickListener mItemClickListener = null;
 
     @NonNull
     @Override
     public InnerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_pager_content, parent, false);
-        LogUtil.d(this, "count ==> " + count++);
         return new InnerHolder(itemView);
     }
 
@@ -48,6 +46,14 @@ public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerConte
     public void onBindViewHolder(@NonNull InnerHolder holder, int position) {
         HomePagerContent.DataBean dataBean = mData.get(position);
         holder.setData(dataBean);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mItemClickListener != null) {
+                    mItemClickListener.onItemClick(dataBean);
+                }
+            }
+        });
     }
 
     @Override
@@ -136,5 +142,13 @@ public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerConte
             //给原价格中间添加一条线
             originalPriceTv.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         }
+    }
+
+    public void setOnListItemClickListener(OnListItemClickListener itemClickListener) {
+        this.mItemClickListener = itemClickListener;
+    }
+
+    public interface OnListItemClickListener{
+        void onItemClick(HomePagerContent.DataBean item);
     }
 }

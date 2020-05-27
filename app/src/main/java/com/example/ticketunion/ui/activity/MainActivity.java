@@ -1,14 +1,13 @@
 package com.example.ticketunion.ui.activity;
 
-import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.ticketunion.R;
+import com.example.ticketunion.base.BaseActivity;
 import com.example.ticketunion.base.BaseFragment;
 import com.example.ticketunion.ui.fragment.HomeFragment;
 import com.example.ticketunion.ui.fragment.RedPacketFragment;
@@ -18,10 +17,8 @@ import com.example.ticketunion.utils.LogUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private static final String TAG = "MainActivity";
 
@@ -32,17 +29,27 @@ public class MainActivity extends AppCompatActivity {
     private SelectedFragment mSelectFragment;
     private RedPacketFragment mRedPacket;
     private SearchFragment mSearch;
-
     private FragmentManager mFragmentManager;
-    private Unbinder mBind;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mBind = ButterKnife.bind(this);
+    protected void initView() {
         initFragment();
+    }
+
+    @Override
+    protected void initPresenter() {
+
+    }
+
+    @Override
+    protected void initEvent() {
         initListener();
+    }
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_main;
     }
 
     private void initFragment() {
@@ -89,21 +96,26 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private BaseFragment lastFragment = null;
+
     /**
      * 切换Fragment
      * @param fragment
      */
     private void switchFragment(BaseFragment fragment) {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        transaction.replace(R.id.main_page_container, fragment);
+
+        if (!fragment.isAdded()) {
+            transaction.add(R.id.main_page_container, fragment);
+        } else {
+            transaction.show(fragment);
+        }
+        if (lastFragment != null) {
+            transaction.hide(lastFragment);
+        }
+        lastFragment = fragment;
         transaction.commit();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mBind != null) {
-            mBind.unbind();
-        }
-    }
+
 }

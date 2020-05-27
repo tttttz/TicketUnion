@@ -24,6 +24,9 @@ import java.util.List;
 public class LooperPagerAdapter extends PagerAdapter {
 
     private List<HomePagerContent.DataBean> mData = new ArrayList<>();
+
+    private OnLooperPagerClickListener mLooperPagerClickListener = null;
+
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
@@ -37,6 +40,14 @@ public class LooperPagerAdapter extends PagerAdapter {
         String coverUrl = UrlUtils.getCoverPath(dataBean.getPict_url(), ivSize);
         Context context = container.getContext();
         ImageView iv = new ImageView(context);
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mLooperPagerClickListener != null) {
+                    mLooperPagerClickListener.onLooperItemClick(dataBean);
+                }
+            }
+        });
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         iv.setLayoutParams(layoutParams);
         iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -69,5 +80,13 @@ public class LooperPagerAdapter extends PagerAdapter {
         mData.clear();
         mData.addAll(contents);
         notifyDataSetChanged();
+    }
+
+    public void setOnLooperPagerClickListener(OnLooperPagerClickListener looperPagerClickListener){
+        this.mLooperPagerClickListener = looperPagerClickListener;
+    }
+
+    public interface OnLooperPagerClickListener{
+        void onLooperItemClick(HomePagerContent.DataBean data);
     }
 }

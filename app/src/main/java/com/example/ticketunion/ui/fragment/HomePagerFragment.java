@@ -1,5 +1,6 @@
 package com.example.ticketunion.ui.fragment;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
@@ -17,11 +18,14 @@ import com.example.ticketunion.base.BaseFragment;
 import com.example.ticketunion.model.domain.Categories;
 import com.example.ticketunion.model.domain.HomePagerContent;
 import com.example.ticketunion.presenter.ICategoryPagerPresenter;
-import com.example.ticketunion.presenter.impl.CategoryPagePresenterImpl;
+import com.example.ticketunion.presenter.impl.TicketPresentImpl;
+import com.example.ticketunion.ui.activity.TicketActivity;
 import com.example.ticketunion.ui.adapter.HomePagerContentAdapter;
 import com.example.ticketunion.ui.adapter.LooperPagerAdapter;
+import com.example.ticketunion.ui.custom.AutoLooperViewPager;
 import com.example.ticketunion.utils.Constants;
 import com.example.ticketunion.utils.LogUtil;
+import com.example.ticketunion.utils.PresenterManager;
 import com.example.ticketunion.utils.SizeUtils;
 import com.example.ticketunion.utils.ToastUtil;
 import com.example.ticketunion.view.ICategoryPagerCallback;
@@ -39,9 +43,9 @@ import butterknife.BindView;
  * @CreateDate: 2020/5/18 19:46
  * God bless my code!
  */
-public class HomePagerFragment extends BaseFragment implements ICategoryPagerCallback {
+public class HomePagerFragment extends BaseFragment implements ICategoryPagerCallback, HomePagerContentAdapter.OnListItemClickListener, LooperPagerAdapter.OnLooperPagerClickListener {
 
-    private ICategoryPagerPresenter mCategoryPagePresenter;
+    private ICategoryPagerPresenter mPagerPresenter;
     //当前物料id
     private int mMaterialId;
 
@@ -49,7 +53,7 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
     public RecyclerView mContentList;
 
     @BindView(R.id.looper_pager)
-    public ViewPager looperPager;
+    public AutoLooperViewPager looperPager;
 
     @BindView(R.id.home_pager_title)
     public TextView currentCategoryTitleTv;
@@ -83,8 +87,22 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
 
     @Override
     protected void initPresenter() {
-        mCategoryPagePresenter = CategoryPagePresenterImpl.getInstance();
-        mCategoryPagePresenter.registerViewCallback(this);
+        mPagerPresenter = PresenterManager.getInstance().getCategoryPagePresenter();
+        mPagerPresenter.registerViewCallback(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //可见时开始轮播图的自动轮播
+        looperPager.startLoop();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        //不可见时停止轮播
+        looperPager.stopLoop();
     }
 
     @Override
@@ -93,8 +111,8 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         String title = arguments.getString(Constants.KEY_HOME_PAGER_TITLE, "");
         mMaterialId = arguments.getInt(Constants.KEY_HOME_PAGER_MATERIAL_ID, 0);
         //LogUtil.d(this, "title ==> " + title + " id ==> " + mMaterialId);
-        if (mCategoryPagePresenter != null) {
-            mCategoryPagePresenter.getContentByCategoryId(mMaterialId);
+        if (mPagerPresenter != null) {
+            mPagerPresenter.getContentByCategoryId(mMaterialId);
         }
         if (currentCategoryTitleTv != null) {
             currentCategoryTitleTv.setText(title);
@@ -135,6 +153,10 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
 
     @Override
     protected void initListener() {
+
+        mContentAdapter.setOnListItemClickListener(this);
+        mLooperPagerAdapter.setOnLooperPagerClickListener(this);
+
         looperPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -163,6 +185,9 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         homePagerParent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
+                if (homeHeaderContainer == null) {
+                    return;
+                }
                 int headerHeight = homeHeaderContainer.getMeasuredHeight();
                 LogUtil.d(HomePagerFragment.this, "headerHeight ==> " + headerHeight);
                 homePagerNestedView.setHeaderHeight(headerHeight);
@@ -180,8 +205,8 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         twinklingRefreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
             public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
-                if (mCategoryPagePresenter != null) {
-                    mCategoryPagePresenter.loadMore(mMaterialId);
+                if (mPagerPresenter != null) {
+                    mPagerPresenter.loadMore(mMaterialId);
                 }
             }
         });
@@ -201,8 +226,8 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
 
     @Override
     protected void release() {
-        if (mCategoryPagePresenter != null) {
-            mCategoryPagePresenter.unregisterViewCallback(this);
+        if (mPagerPresenter != null) {
+            mPagerPresenter.unregisterViewCallback(this);
         }
     }
 
@@ -295,5 +320,31 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
     }
 
 
+    /**
+     * 列表内容的点击回调
+     */
+    @Override
+    public void onItemClick(HomePagerContent.DataBean item) {
+        LogUtil.d(this, "item click ==> " + item.getTitle());
+        handleItem(item);
+    }
 
+    private void handleItem(HomePagerContent.DataBean item) {
+        //拿到presenter加载数据
+        String title = item.getTitle();
+        String url = item.getClick_url();
+        String cover = item.getPict_url();
+        TicketPresentImpl ticketPresent = PresenterManager.getInstance().getTicketPresent();
+        ticketPresent.getTicket(title, url, cover);
+        startActivity(new Intent(getContext(), TicketActivity.class));
+    }
+
+    /**
+     * 轮播图内容的点击回调
+     */
+    @Override
+    public void onLooperItemClick(HomePagerContent.DataBean item) {
+        LogUtil.d(this, "pager click ==> " + item.getTitle());
+        handleItem(item);
+    }
 }
