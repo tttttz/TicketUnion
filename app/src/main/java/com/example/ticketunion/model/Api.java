@@ -2,6 +2,8 @@ package com.example.ticketunion.model;
 
 import com.example.ticketunion.model.domain.Categories;
 import com.example.ticketunion.model.domain.HomePagerContent;
+import com.example.ticketunion.model.domain.SelectedContent;
+import com.example.ticketunion.model.domain.SelectedPageCategory;
 import com.example.ticketunion.model.domain.TicketParams;
 import com.example.ticketunion.model.domain.TicketResult;
 
@@ -9,6 +11,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import retrofit2.http.Url;
 
 /**
@@ -27,4 +30,10 @@ public interface Api {
 
     @POST("tpwd")
     Call<TicketResult> getTicket(@Body TicketParams ticketParams);
+
+    @GET("recommend/categories")
+    Call<SelectedPageCategory> getSelectedCategory();
+
+    @GET("recommend/categoryId")
+    Call<SelectedContent> getSelectedPageContent(@Query("categoryId") int categoryId);
 }

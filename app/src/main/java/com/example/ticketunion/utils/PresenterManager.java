@@ -2,6 +2,7 @@ package com.example.ticketunion.utils;
 
 import com.example.ticketunion.presenter.impl.CategoryPagePresenterImpl;
 import com.example.ticketunion.presenter.impl.HomePresenterImpl;
+import com.example.ticketunion.presenter.impl.SelectedPagePresenterImpl;
 import com.example.ticketunion.presenter.impl.TicketPresentImpl;
 
 /**
@@ -16,6 +17,12 @@ public class PresenterManager {
     private CategoryPagePresenterImpl mCategoryPagePresenter = null;
     private HomePresenterImpl mHomePresenter = null;
     private TicketPresentImpl mTicketPresent = null;
+
+    public SelectedPagePresenterImpl getSelectedPagePresenter() {
+        return mSelectedPagePresenter;
+    }
+
+    private SelectedPagePresenterImpl mSelectedPagePresenter = null;
 
     public TicketPresentImpl getTicketPresent() {
         return mTicketPresent;
@@ -40,6 +47,7 @@ public class PresenterManager {
         mCategoryPagePresenter = new CategoryPagePresenterImpl();
         mHomePresenter = new HomePresenterImpl();
         mTicketPresent = new TicketPresentImpl();
+        mSelectedPagePresenter = new SelectedPagePresenterImpl();
     }
 
 }
