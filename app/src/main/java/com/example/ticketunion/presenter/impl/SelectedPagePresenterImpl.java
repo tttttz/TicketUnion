@@ -6,6 +6,7 @@ import com.example.ticketunion.model.domain.SelectedPageCategory;
 import com.example.ticketunion.presenter.ISelectedPagePresenter;
 import com.example.ticketunion.utils.LogUtil;
 import com.example.ticketunion.utils.RetrofitManager;
+import com.example.ticketunion.utils.UrlUtils;
 import com.example.ticketunion.view.ISelectedPageCallback;
 
 import java.net.HttpURLConnection;
@@ -74,7 +75,11 @@ public class SelectedPagePresenterImpl implements ISelectedPagePresenter {
     @Override
     public void getContentByCategory(SelectedPageCategory.DataBean item) {
         this.mCurrentCategoryItem = item;
-        Call<SelectedContent> task = mApi.getSelectedPageContent(item.getFavorites_id());
+        int categoryId = item.getFavorites_id();
+        LogUtil.d(this, "categoryId ==> " + categoryId);
+        String targetUrl = UrlUtils.getSelectedPageContentUrl(categoryId);
+
+        Call<SelectedContent> task = mApi.getSelectedPageContent(targetUrl);
         task.enqueue(new Callback<SelectedContent>() {
             @Override
             public void onResponse(Call<SelectedContent> call, Response<SelectedContent> response) {

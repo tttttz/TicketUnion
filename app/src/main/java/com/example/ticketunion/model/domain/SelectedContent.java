@@ -23,6 +23,16 @@ public class SelectedContent {
     private String message;
     private DataBean data;
 
+    @Override
+    public String toString() {
+        return "SelectedContent{" +
+                "success=" + success +
+                ", code=" + code +
+                ", message='" + message + '\'' +
+                ", data=" + data +
+                '}';
+    }
+
     public boolean isSuccess() {
         return success;
     }
@@ -70,12 +80,29 @@ public class SelectedContent {
             this.tbk_uatm_favorites_item_get_response = tbk_uatm_favorites_item_get_response;
         }
 
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "tbk_uatm_favorites_item_get_response=" + tbk_uatm_favorites_item_get_response +
+                    '}';
+        }
+
         public static class TbkUatmFavoritesItemGetResponseBean {
+            @Override
+            public String toString() {
+                return "TbkUatmFavoritesItemGetResponseBean{" +
+                        "results=" + results +
+                        ", total_results=" + total_results +
+                        ", request_id='" + request_id + '\'' +
+                        '}';
+            }
+
             /**
              * results : {"favoriteId":0,"uatm_tbk_item":[{"click_url":"https://s.click.taobao.com/t?e=m%3D2%26s%3DQqgvXVwF4QAcQipKwQzePOeEDrYVVa64yK8Cckff7TXjf2vlNIV67lbA7kVj6DOjxeoNewupcd6YzwUb1bbXppZwHxYkBYTUeP8T%2BYUOOiuIOBqu0asPv%2F0jCkSDmD6DKe3%2FbelnU7chre9gvq5P3zKYVV1BId1rfp5HoTJX0vWplyh2W4e4BPxr1c6V5LsG1hjz2dNwkcRt%2ByMzJ8mpM%2Fe7B5ZkP8EjSdChf3U3iXY%2B5QowgvHJPA%3D%3D&unid=19902751&union_lens=lensId:0b012096_0c74_16ec657c76b_e230","coupon_click_url":"https://uland.taobao.com/coupon/edetail?e=TBIJTibAhO4GQASttHIRqQA9fN4MifAG7tS89T6GqASOeUcSvy%2FHYmF5qFnaO9996DeX2ucVKhvHjZlrd41oqDEL25HyNw0xJ4FRquMv%2FTtFRuNP9Tp9RQH%2FlwNDrBX3XYsE5g93lTYZao0HO%2FvX0w%3D%3D&union_lens=lensId:0b012096_0c74_16ec657c76b_e230","coupon_end_time":"2019-12-07","coupon_info":"满7元减5元","coupon_remain_count":99635,"coupon_start_time":"2019-12-01","coupon_total_count":100000,"event_end_time":"1970-01-01 00:00:00","event_start_time":"1970-01-01 00:00:00","item_url":"https://item.taobao.com/item.htm?id=595184094985","num_iid":595184094985,"pict_url":"https://img.alicdn.com/tfscom/i1/1744991291/O1CN01J58x6I1LPJqtM61gh_!!0-item_pic.jpg","reserve_price":"45.00","status":1,"title":"纳雷特原装正品适用 OPPO数据线闪充R9 R15 R11s R11 R11s plus R9s R7安卓手机原厂快充短充电器头线2米加长","tk_rate":"9.00","type":4,"user_type":1,"volume":11450,"zk_final_price":"10.90","zk_final_price_wap":"10.90"}]}
              * total_results : 26
              * request_id : sa9tsfbr1uco
              */
+
 
             private ResultsBean results;
             private int total_results;
@@ -106,10 +133,19 @@ public class SelectedContent {
             }
 
             public static class ResultsBean {
+                @Override
+                public String toString() {
+                    return "ResultsBean{" +
+                            "favoriteId=" + favoriteId +
+                            ", uatm_tbk_item=" + uatm_tbk_item +
+                            '}';
+                }
+
                 /**
                  * favoriteId : 0
                  * uatm_tbk_item : [{"click_url":"https://s.click.taobao.com/t?e=m%3D2%26s%3DQqgvXVwF4QAcQipKwQzePOeEDrYVVa64yK8Cckff7TXjf2vlNIV67lbA7kVj6DOjxeoNewupcd6YzwUb1bbXppZwHxYkBYTUeP8T%2BYUOOiuIOBqu0asPv%2F0jCkSDmD6DKe3%2FbelnU7chre9gvq5P3zKYVV1BId1rfp5HoTJX0vWplyh2W4e4BPxr1c6V5LsG1hjz2dNwkcRt%2ByMzJ8mpM%2Fe7B5ZkP8EjSdChf3U3iXY%2B5QowgvHJPA%3D%3D&unid=19902751&union_lens=lensId:0b012096_0c74_16ec657c76b_e230","coupon_click_url":"https://uland.taobao.com/coupon/edetail?e=TBIJTibAhO4GQASttHIRqQA9fN4MifAG7tS89T6GqASOeUcSvy%2FHYmF5qFnaO9996DeX2ucVKhvHjZlrd41oqDEL25HyNw0xJ4FRquMv%2FTtFRuNP9Tp9RQH%2FlwNDrBX3XYsE5g93lTYZao0HO%2FvX0w%3D%3D&union_lens=lensId:0b012096_0c74_16ec657c76b_e230","coupon_end_time":"2019-12-07","coupon_info":"满7元减5元","coupon_remain_count":99635,"coupon_start_time":"2019-12-01","coupon_total_count":100000,"event_end_time":"1970-01-01 00:00:00","event_start_time":"1970-01-01 00:00:00","item_url":"https://item.taobao.com/item.htm?id=595184094985","num_iid":595184094985,"pict_url":"https://img.alicdn.com/tfscom/i1/1744991291/O1CN01J58x6I1LPJqtM61gh_!!0-item_pic.jpg","reserve_price":"45.00","status":1,"title":"纳雷特原装正品适用 OPPO数据线闪充R9 R15 R11s R11 R11s plus R9s R7安卓手机原厂快充短充电器头线2米加长","tk_rate":"9.00","type":4,"user_type":1,"volume":11450,"zk_final_price":"10.90","zk_final_price_wap":"10.90"}]
                  */
+
 
                 private int favoriteId;
                 private List<UatmTbkItemBean> uatm_tbk_item;
@@ -176,6 +212,33 @@ public class SelectedContent {
                     private int volume;
                     private String zk_final_price;
                     private String zk_final_price_wap;
+
+                    @Override
+                    public String toString() {
+                        return "UatmTbkItemBean{" +
+                                "click_url='" + click_url + '\'' +
+                                ", coupon_click_url='" + coupon_click_url + '\'' +
+                                ", coupon_end_time='" + coupon_end_time + '\'' +
+                                ", coupon_info='" + coupon_info + '\'' +
+                                ", coupon_remain_count=" + coupon_remain_count +
+                                ", coupon_start_time='" + coupon_start_time + '\'' +
+                                ", coupon_total_count=" + coupon_total_count +
+                                ", event_end_time='" + event_end_time + '\'' +
+                                ", event_start_time='" + event_start_time + '\'' +
+                                ", item_url='" + item_url + '\'' +
+                                ", num_iid=" + num_iid +
+                                ", pict_url='" + pict_url + '\'' +
+                                ", reserve_price='" + reserve_price + '\'' +
+                                ", status=" + status +
+                                ", title='" + title + '\'' +
+                                ", tk_rate='" + tk_rate + '\'' +
+                                ", type=" + type +
+                                ", user_type=" + user_type +
+                                ", volume=" + volume +
+                                ", zk_final_price='" + zk_final_price + '\'' +
+                                ", zk_final_price_wap='" + zk_final_price_wap + '\'' +
+                                '}';
+                    }
 
                     public String getClick_url() {
                         return click_url;

@@ -11,7 +11,6 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 import retrofit2.http.Url;
 
 /**
@@ -34,6 +33,6 @@ public interface Api {
     @GET("recommend/categories")
     Call<SelectedPageCategory> getSelectedCategory();
 
-    @GET("recommend/categoryId")
-    Call<SelectedContent> getSelectedPageContent(@Query("categoryId") int categoryId);
+    @GET()
+    Call<SelectedContent> getSelectedPageContent(@Url String url);
 }
