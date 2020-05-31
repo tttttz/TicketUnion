@@ -73,6 +73,10 @@ public class SelectedPageLeftAdapter extends RecyclerView.Adapter<SelectedPageLe
             mData.addAll(data);
             notifyDataSetChanged();
         }
+        //设置初始的目录选择情况
+        if (mData.size() > 0) {
+            mOnItemClickListener.onLeftItemClick(mData.get(mCurrentSelectedPosition));
+        }
     }
 
     public class InnerHolder extends RecyclerView.ViewHolder {

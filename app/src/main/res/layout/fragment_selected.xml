@@ -27,12 +27,14 @@
         android:orientation="horizontal">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:overScrollMode="never"
             android:id="@+id/left_category_list"
             android:layout_width="120dp"
             android:background="@color/white"
             android:layout_height="match_parent"/>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:overScrollMode="never"
             android:id="@+id/right_content_list"
             android:background="@color/colorEFEEEE"
             android:layout_width="match_parent"
