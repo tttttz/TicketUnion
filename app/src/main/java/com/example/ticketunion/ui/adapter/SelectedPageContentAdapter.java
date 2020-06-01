@@ -33,6 +33,7 @@ public class SelectedPageContentAdapter extends RecyclerView.Adapter<SelectedPag
 
     private List<SelectedContent.DataBean.TbkUatmFavoritesItemGetResponseBean.ResultsBean.UatmTbkItemBean> mData
             = new ArrayList<>();
+    private OnSelectedPageContentItemClickListener mContentItemClickListener = null;
 
     @NonNull
     @Override
@@ -45,6 +46,14 @@ public class SelectedPageContentAdapter extends RecyclerView.Adapter<SelectedPag
     public void onBindViewHolder(@NonNull InnerHolder holder, int position) {
         SelectedContent.DataBean.TbkUatmFavoritesItemGetResponseBean.ResultsBean.UatmTbkItemBean itemData = mData.get(position);
         holder.setData(itemData);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mContentItemClickListener != null) {
+                    mContentItemClickListener.onContentItemClick(itemData);
+                }
+            }
+        });
     }
 
     @Override
@@ -106,5 +115,13 @@ public class SelectedPageContentAdapter extends RecyclerView.Adapter<SelectedPag
                 offPriceTv.setText(itemData.getCoupon_info());
             }
         }
+    }
+
+    public void setOnSelectedPageContentItemClickListener(OnSelectedPageContentItemClickListener listener) {
+        this.mContentItemClickListener = listener;
+    }
+
+    public interface OnSelectedPageContentItemClickListener {
+        void onContentItemClick(SelectedContent.DataBean.TbkUatmFavoritesItemGetResponseBean.ResultsBean.UatmTbkItemBean item);
     }
 }

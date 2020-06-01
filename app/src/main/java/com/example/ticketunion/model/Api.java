@@ -2,6 +2,7 @@ package com.example.ticketunion.model;
 
 import com.example.ticketunion.model.domain.Categories;
 import com.example.ticketunion.model.domain.HomePagerContent;
+import com.example.ticketunion.model.domain.OnSellContent;
 import com.example.ticketunion.model.domain.SelectedContent;
 import com.example.ticketunion.model.domain.SelectedPageCategory;
 import com.example.ticketunion.model.domain.TicketParams;
@@ -33,6 +34,9 @@ public interface Api {
     @GET("recommend/categories")
     Call<SelectedPageCategory> getSelectedCategory();
 
-    @GET()
+    @GET
     Call<SelectedContent> getSelectedPageContent(@Url String url);
+
+    @GET
+    Call<OnSellContent> getOnSellContent(@Url String url);
 }

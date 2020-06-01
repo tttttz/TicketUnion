@@ -67,7 +67,6 @@ public class TicketActivity extends BaseActivity implements ITicketPagerCallback
         }
         //检查是否有安装淘宝
         searchForTaobao();
-
     }
 
     private void searchForTaobao() {

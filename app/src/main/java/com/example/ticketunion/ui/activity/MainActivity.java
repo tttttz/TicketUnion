@@ -10,7 +10,7 @@ import com.example.ticketunion.R;
 import com.example.ticketunion.base.BaseActivity;
 import com.example.ticketunion.base.BaseFragment;
 import com.example.ticketunion.ui.fragment.HomeFragment;
-import com.example.ticketunion.ui.fragment.RedPacketFragment;
+import com.example.ticketunion.ui.fragment.OnSellFragment;
 import com.example.ticketunion.ui.fragment.SearchFragment;
 import com.example.ticketunion.ui.fragment.SelectedFragment;
 import com.example.ticketunion.utils.LogUtil;
@@ -27,7 +27,7 @@ public class MainActivity extends BaseActivity {
     //四个Fragment
     private HomeFragment mHomeFragment;
     private SelectedFragment mSelectFragment;
-    private RedPacketFragment mRedPacket;
+    private OnSellFragment mRedPacket;
     private SearchFragment mSearch;
     private FragmentManager mFragmentManager;
 
@@ -55,7 +55,7 @@ public class MainActivity extends BaseActivity {
     private void initFragment() {
         mHomeFragment = new HomeFragment();
         mSelectFragment = new SelectedFragment();
-        mRedPacket = new RedPacketFragment();
+        mRedPacket = new OnSellFragment();
         mSearch = new SearchFragment();
         //得到FragmentManager
         mFragmentManager = getSupportFragmentManager();

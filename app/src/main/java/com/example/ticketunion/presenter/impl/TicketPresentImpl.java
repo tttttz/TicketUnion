@@ -51,13 +51,11 @@ public class TicketPresentImpl implements ITicketPresenter {
         task.enqueue(new Callback<TicketResult>() {
             @Override
             public void onResponse(Call<TicketResult> call, Response<TicketResult> response) {
-
                 int code = response.code();
                 LogUtil.d(TicketPresentImpl.this, "ticket code ==> " + code);
                 if (code == HttpURLConnection.HTTP_OK) {
                     mResult = response.body();
                     LogUtil.d(TicketPresentImpl.this, "result ==> " + mResult);
-
                     onTicketLoadSuccess();
                 } else {
                     onLoadTickError();
