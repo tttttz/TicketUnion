@@ -1,9 +1,10 @@
 package com.example.ticketunion.ui.fragment;
 
-import android.content.Intent;
 import android.graphics.Rect;
-import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -11,13 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ticketunion.R;
 import com.example.ticketunion.base.BaseFragment;
+import com.example.ticketunion.base.IBaseInfo;
 import com.example.ticketunion.model.domain.OnSellContent;
 import com.example.ticketunion.presenter.impl.OnSellPagePresenterImpl;
-import com.example.ticketunion.presenter.impl.TicketPresentImpl;
-import com.example.ticketunion.ui.activity.TicketActivity;
 import com.example.ticketunion.ui.adapter.OnSellContentAdapter;
 import com.example.ticketunion.utils.PresenterManager;
 import com.example.ticketunion.utils.SizeUtils;
+import com.example.ticketunion.utils.TickUtils;
 import com.example.ticketunion.utils.ToastUtil;
 import com.example.ticketunion.view.IOnSellCallback;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
@@ -35,6 +36,10 @@ public class OnSellFragment extends BaseFragment implements IOnSellCallback, OnS
 
     @BindView(R.id.on_sell_refresh_layout)
     TwinklingRefreshLayout  mTwinklingRefreshLayout;
+
+    //fragment bar的标题
+    @BindView(R.id.fragment_bat_title_tv)
+    public TextView barTitleTv;
 
     private OnSellContentAdapter mOnSellContentAdapter;
 
@@ -62,6 +67,7 @@ public class OnSellFragment extends BaseFragment implements IOnSellCallback, OnS
         mTwinklingRefreshLayout.setEnableLoadmore(true);
         mTwinklingRefreshLayout.setEnableRefresh(false);
         mTwinklingRefreshLayout.setEnableOverScroll(true);
+        barTitleTv.setText("特惠宝贝");
     }
 
     @Override
@@ -83,6 +89,11 @@ public class OnSellFragment extends BaseFragment implements IOnSellCallback, OnS
         mOnSellPagePresenter = PresenterManager.getInstance().getOnSellPagePresenter();
         mOnSellPagePresenter.registerViewCallback(this);
         mOnSellPagePresenter.getSellContent();
+    }
+
+    @Override
+    protected View loadRootView(LayoutInflater inflater, ViewGroup container) {
+        return inflater.inflate(R.layout.fragment_with_bar_layout, container, false);
     }
 
     @Override
@@ -145,19 +156,7 @@ public class OnSellFragment extends BaseFragment implements IOnSellCallback, OnS
     }
 
     @Override
-    public void onSellItemClick(OnSellContent.DataBean.TbkDgOptimusMaterialResponseBean.ResultListBean.MapDataBean item) {
-        //内容被点击了
-        //拿到presenter加载数据
-        String title = item.getTitle();
-        //这个是优惠券的地址
-        String url = item.getCoupon_click_url();
-        if (TextUtils.isEmpty(url)) {
-            //若没有优惠券了,则使用详情地址
-            url = item.getClick_url();
-        }
-        String cover = item.getPict_url();
-        TicketPresentImpl ticketPresent = PresenterManager.getInstance().getTicketPresent();
-        ticketPresent.getTicket(title, url, cover);
-        startActivity(new Intent(getContext(), TicketActivity.class));
+    public void onSellItemClick(IBaseInfo item) {
+        TickUtils.toTickPage(getContext(), item);
     }
 }

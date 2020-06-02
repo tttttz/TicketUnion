@@ -1,38 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+
+
+<com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/on_sell_refresh_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/colorPrimary">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:layout_marginLeft="16dp"
-            android:textColor="@color/white"
-            android:layout_centerVertical="true"
-            android:text="@string/text_on_sell_title"/>
-
-    </RelativeLayout>
-
-    <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/on_sell_content_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/on_sell_refresh_layout">
+        android:overScrollMode="never" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/on_sell_content_list"
-            android:overScrollMode="never"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-    </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
-
-
-
-</LinearLayout>
+</com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>

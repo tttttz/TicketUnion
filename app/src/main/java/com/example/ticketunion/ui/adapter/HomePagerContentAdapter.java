@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.ticketunion.R;
+import com.example.ticketunion.base.IBaseInfo;
 import com.example.ticketunion.model.domain.HomePagerContent;
 import com.example.ticketunion.utils.LogUtil;
 import com.example.ticketunion.utils.UrlUtils;
@@ -149,6 +150,6 @@ public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerConte
     }
 
     public interface OnListItemClickListener{
-        void onItemClick(HomePagerContent.DataBean item);
+        void onItemClick(IBaseInfo item);
     }
 }

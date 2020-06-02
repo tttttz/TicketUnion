@@ -1,9 +1,7 @@
 package com.example.ticketunion.ui.fragment;
 
-import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
@@ -16,11 +14,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.ticketunion.R;
 import com.example.ticketunion.base.BaseFragment;
+import com.example.ticketunion.base.IBaseInfo;
 import com.example.ticketunion.model.domain.Categories;
 import com.example.ticketunion.model.domain.HomePagerContent;
 import com.example.ticketunion.presenter.ICategoryPagerPresenter;
-import com.example.ticketunion.presenter.impl.TicketPresentImpl;
-import com.example.ticketunion.ui.activity.TicketActivity;
 import com.example.ticketunion.ui.adapter.HomePagerContentAdapter;
 import com.example.ticketunion.ui.adapter.LooperPagerAdapter;
 import com.example.ticketunion.ui.custom.AutoLooperViewPager;
@@ -28,6 +25,7 @@ import com.example.ticketunion.utils.Constants;
 import com.example.ticketunion.utils.LogUtil;
 import com.example.ticketunion.utils.PresenterManager;
 import com.example.ticketunion.utils.SizeUtils;
+import com.example.ticketunion.utils.TickUtils;
 import com.example.ticketunion.utils.ToastUtil;
 import com.example.ticketunion.view.ICategoryPagerCallback;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
@@ -325,31 +323,20 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
      * 列表内容的点击回调
      */
     @Override
-    public void onItemClick(HomePagerContent.DataBean item) {
+    public void onItemClick(IBaseInfo item) {
         LogUtil.d(this, "item click ==> " + item.getTitle());
         handleItem(item);
     }
 
-    private void handleItem(HomePagerContent.DataBean item) {
-        //拿到presenter加载数据
-        String title = item.getTitle();
-        //这个是优惠券的地址
-        String url = item.getCoupon_click_url();
-        if (TextUtils.isEmpty(url)) {
-            //若没有优惠券了,则使用详情地址
-            url = item.getClick_url();
-        }
-        String cover = item.getPict_url();
-        TicketPresentImpl ticketPresent = PresenterManager.getInstance().getTicketPresent();
-        ticketPresent.getTicket(title, url, cover);
-        startActivity(new Intent(getContext(), TicketActivity.class));
+    private void handleItem(IBaseInfo item) {
+        TickUtils.toTickPage(getContext(), item);
     }
 
     /**
      * 轮播图内容的点击回调
      */
     @Override
-    public void onLooperItemClick(HomePagerContent.DataBean item) {
+    public void onLooperItemClick(IBaseInfo item) {
         LogUtil.d(this, "pager click ==> " + item.getTitle());
         handleItem(item);
     }

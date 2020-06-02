@@ -5,10 +5,13 @@
     android:layout_height="match_parent"
     android:gravity="center">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="搜索"
-        android:textSize="20sp"/>
+    <!--    历史记录-->
+
+
+    <!--    推荐关键字-->
+
+
+    <!--    搜索结果-->
+
 
 </LinearLayout>

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
+import com.example.ticketunion.base.IBaseInfo;
 import com.example.ticketunion.model.domain.HomePagerContent;
 import com.example.ticketunion.utils.UrlUtils;
 
@@ -87,6 +88,6 @@ public class LooperPagerAdapter extends PagerAdapter {
     }
 
     public interface OnLooperPagerClickListener{
-        void onLooperItemClick(HomePagerContent.DataBean data);
+        void onLooperItemClick(IBaseInfo data);
     }
 }

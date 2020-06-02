@@ -1,9 +1,10 @@
 package com.example.ticketunion.ui.fragment;
 
-import android.content.Intent;
 import android.graphics.Rect;
-import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,16 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ticketunion.R;
 import com.example.ticketunion.base.BaseFragment;
+import com.example.ticketunion.base.IBaseInfo;
 import com.example.ticketunion.model.domain.SelectedContent;
 import com.example.ticketunion.model.domain.SelectedPageCategory;
 import com.example.ticketunion.presenter.ISelectedPagePresenter;
-import com.example.ticketunion.presenter.impl.TicketPresentImpl;
-import com.example.ticketunion.ui.activity.TicketActivity;
 import com.example.ticketunion.ui.adapter.SelectedPageContentAdapter;
 import com.example.ticketunion.ui.adapter.SelectedPageLeftAdapter;
 import com.example.ticketunion.utils.LogUtil;
 import com.example.ticketunion.utils.PresenterManager;
 import com.example.ticketunion.utils.SizeUtils;
+import com.example.ticketunion.utils.TickUtils;
 import com.example.ticketunion.view.ISelectedPageCallback;
 
 import java.util.List;
@@ -36,6 +37,10 @@ public class SelectedFragment extends BaseFragment implements ISelectedPageCallb
 
     @BindView(R.id.right_content_list)
     public RecyclerView rightContentList;
+    //fragment bar的标题
+    @BindView(R.id.fragment_bat_title_tv)
+    public TextView barTitleTv;
+
 
     private SelectedPageLeftAdapter mLeftAdapter;
     private SelectedPageContentAdapter mRightAdapter;
@@ -47,6 +52,7 @@ public class SelectedFragment extends BaseFragment implements ISelectedPageCallb
     @Override
     protected void initView(View rootView) {
         setupState(State.SUCCESS);
+        barTitleTv.setText("精选宝贝");
         //左侧RecyclerView初始化
         leftCategoryList.setLayoutManager(new LinearLayoutManager(getContext()));
         mLeftAdapter = new SelectedPageLeftAdapter();
@@ -79,6 +85,11 @@ public class SelectedFragment extends BaseFragment implements ISelectedPageCallb
         mSelectedPagePresenter = PresenterManager.getInstance().getSelectedPagePresenter();
         mSelectedPagePresenter.registerViewCallback(this);
         mSelectedPagePresenter.getCategories();
+    }
+
+    @Override
+    protected View loadRootView(LayoutInflater inflater, ViewGroup container) {
+        return inflater.inflate(R.layout.fragment_with_bar_layout, container, false);
     }
 
     @Override
@@ -141,19 +152,7 @@ public class SelectedFragment extends BaseFragment implements ISelectedPageCallb
 
     //右侧点击事件
     @Override
-    public void onContentItemClick(SelectedContent.DataBean.TbkUatmFavoritesItemGetResponseBean.ResultsBean.UatmTbkItemBean item) {
-        //内容被点击了
-        //拿到presenter加载数据
-        String title = item.getTitle();
-        //这个是优惠券的地址
-        String url = item.getCoupon_click_url();
-        if (TextUtils.isEmpty(url)) {
-            //若没有优惠券了,则使用详情地址
-            url = item.getClick_url();
-        }
-        String cover = item.getPict_url();
-        TicketPresentImpl ticketPresent = PresenterManager.getInstance().getTicketPresent();
-        ticketPresent.getTicket(title, url, cover);
-        startActivity(new Intent(getContext(), TicketActivity.class));
+    public void onContentItemClick(IBaseInfo item) {
+        TickUtils.toTickPage(getContext(), item);
     }
 }

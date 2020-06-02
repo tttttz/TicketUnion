@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.ticketunion.R;
+import com.example.ticketunion.base.IBaseInfo;
 import com.example.ticketunion.model.domain.SelectedContent;
 import com.example.ticketunion.utils.LogUtil;
 
@@ -122,6 +123,6 @@ public class SelectedPageContentAdapter extends RecyclerView.Adapter<SelectedPag
     }
 
     public interface OnSelectedPageContentItemClickListener {
-        void onContentItemClick(SelectedContent.DataBean.TbkUatmFavoritesItemGetResponseBean.ResultsBean.UatmTbkItemBean item);
+        void onContentItemClick(IBaseInfo item);
     }
 }
