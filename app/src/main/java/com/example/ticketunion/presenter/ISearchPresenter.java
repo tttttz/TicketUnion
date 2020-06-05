@@ -29,7 +29,7 @@ public interface ISearchPresenter extends IBasePresenter<ISearchCallback> {
     /**
      * 重新搜索
      */
-    void research();
+    void reSearch();
 
     /**
      * 获取更多搜索结果

@@ -18,7 +18,7 @@ import com.example.ticketunion.base.IBaseInfo;
 import com.example.ticketunion.model.domain.Categories;
 import com.example.ticketunion.model.domain.HomePagerContent;
 import com.example.ticketunion.presenter.ICategoryPagerPresenter;
-import com.example.ticketunion.ui.adapter.HomePagerContentAdapter;
+import com.example.ticketunion.ui.adapter.LinearItemContentAdapter;
 import com.example.ticketunion.ui.adapter.LooperPagerAdapter;
 import com.example.ticketunion.ui.custom.AutoLooperViewPager;
 import com.example.ticketunion.utils.Constants;
@@ -42,7 +42,7 @@ import butterknife.BindView;
  * @CreateDate: 2020/5/18 19:46
  * God bless my code!
  */
-public class HomePagerFragment extends BaseFragment implements ICategoryPagerCallback, HomePagerContentAdapter.OnListItemClickListener, LooperPagerAdapter.OnLooperPagerClickListener {
+public class HomePagerFragment extends BaseFragment implements ICategoryPagerCallback, LinearItemContentAdapter.OnListItemClickListener, LooperPagerAdapter.OnLooperPagerClickListener {
 
     private ICategoryPagerPresenter mPagerPresenter;
     //当前物料id
@@ -72,7 +72,7 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
     @BindView(R.id.home_pager_header_container)
     public LinearLayout homeHeaderContainer;
 
-    private HomePagerContentAdapter mContentAdapter;
+    private LinearItemContentAdapter mContentAdapter;
     private LooperPagerAdapter mLooperPagerAdapter;
 
     public static HomePagerFragment newInstance(Categories.DataBean category) {
@@ -130,13 +130,13 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         mContentList.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                outRect.top = 8;
-                outRect.bottom = 8;
+                outRect.top = SizeUtils.dip2px(getContext(), 1.5f);
+                outRect.bottom = SizeUtils.dip2px(getContext(), 1.5f);
             }
         });
         //mContentList.setNestedScrollingEnabled(false);
         //创建适配器
-        mContentAdapter = new HomePagerContentAdapter();
+        mContentAdapter = new LinearItemContentAdapter();
         //设置适配器
         mContentList.setAdapter(mContentAdapter);
 

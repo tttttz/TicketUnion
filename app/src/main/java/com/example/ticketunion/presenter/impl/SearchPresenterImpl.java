@@ -44,14 +44,17 @@ public class SearchPresenterImpl implements ISearchPresenter {
     @Override
     public void getHistory() {
         Histories histories = mJsonCacheUtil.getValue(KEY_HISTORIES, Histories.class);
-        if (mCallback != null && histories != null && histories.getHistories() != null && histories.getHistories().size() != 0) {
-            mCallback.onHistoriesLoaded(histories.getHistories());
+        if (mCallback != null) {
+            mCallback.onHistoriesLoaded(histories);
         }
     }
 
     @Override
     public void delHistory() {
         mJsonCacheUtil.delCache(KEY_HISTORIES);
+        if (mCallback != null) {
+            mCallback.onHistoriesDeleted();
+        }
     }
 
     private int mHistoriesMaxSize = DEFAULT_HISTORIES_SIZE;
@@ -139,7 +142,7 @@ public class SearchPresenterImpl implements ISearchPresenter {
     }
 
     @Override
-    public void research() {
+    public void reSearch() {
         if (mCurrentKeyword == null || mCurrentKeyword.equals("")) {
             if (mCallback != null) {
                 mCallback.onEmpty();

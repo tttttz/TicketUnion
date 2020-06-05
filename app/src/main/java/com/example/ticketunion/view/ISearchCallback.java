@@ -1,6 +1,7 @@
 package com.example.ticketunion.view;
 
 import com.example.ticketunion.base.IBaseCallback;
+import com.example.ticketunion.model.domain.Histories;
 import com.example.ticketunion.model.domain.SearchRecommend;
 import com.example.ticketunion.model.domain.SearchResult;
 
@@ -18,7 +19,7 @@ public interface ISearchCallback extends IBaseCallback {
      * 获取历史记录
      * @param histories
      */
-    void onHistoriesLoaded(List<String> histories);
+    void onHistoriesLoaded(Histories histories);
 
     /**
      * 删除历史记录

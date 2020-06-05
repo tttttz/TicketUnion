@@ -8,6 +8,7 @@
         android:id="@+id/main_page_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#EFEEEE"
         android:layout_marginBottom="44dp"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

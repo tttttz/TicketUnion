@@ -13,7 +13,11 @@ public class UrlUtils {
     }
 
     public static String getCoverPath(String pict_url, int size) {
-        return "https:" + pict_url + "_" + size + "x" + size + ".jpg";
+        if (pict_url.startsWith("http")) {
+            return pict_url + "_" + size + "x" + size + ".jpg";
+        } else {
+            return "https:" + pict_url + "_" + size + "x" + size + ".jpg";
+        }
     }
 
     public static String getCoverPath(String pict_url) {
