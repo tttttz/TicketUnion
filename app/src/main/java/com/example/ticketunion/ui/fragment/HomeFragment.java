@@ -1,15 +1,21 @@
 package com.example.ticketunion.ui.fragment;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.ticketunion.R;
 import com.example.ticketunion.base.BaseFragment;
 import com.example.ticketunion.model.domain.Categories;
 import com.example.ticketunion.presenter.IHomePresenter;
+import com.example.ticketunion.ui.activity.MainActivity;
+import com.example.ticketunion.ui.activity.ScanQRCodeActivity;
 import com.example.ticketunion.ui.adapter.HomePagerAdapter;
 import com.example.ticketunion.utils.PresenterManager;
 import com.example.ticketunion.view.IHomeCallback;
@@ -26,6 +32,13 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
 
     @BindView(R.id.home_pager)
     public ViewPager homePager;
+
+    @BindView(R.id.home_search_input_box)
+    public EditText mSearchInputBox;
+
+    @BindView(R.id.iv_scan)
+    public ImageView mScanBtn;
+
     private HomePagerAdapter mHomePagerAdapter;
 
     @Override
@@ -50,6 +63,26 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
         //创建Presenter
         mHomePresenter = PresenterManager.getInstance().getHomePresenter();
         mHomePresenter.registerViewCallback(this);
+    }
+
+    @Override
+    protected void initListener() {
+        mSearchInputBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentActivity activity = getActivity();
+                if (activity instanceof MainActivity) {
+                    ((MainActivity) activity).switchToSearch();
+                }
+            }
+        });
+        mScanBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转到扫码页面
+                startActivity(new Intent(getContext(), ScanQRCodeActivity.class));
+            }
+        });
     }
 
     @Override

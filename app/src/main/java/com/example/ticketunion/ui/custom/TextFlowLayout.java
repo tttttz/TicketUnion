@@ -12,6 +12,7 @@ import com.example.ticketunion.R;
 import com.example.ticketunion.utils.LogUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,6 +29,7 @@ public class TextFlowLayout extends ViewGroup {
     private int mSelfWidth;
     private int mItemHeight;
     private OnFlowTextItemClickListener mItemClickListener = null;
+    private List<String> mTextList = new ArrayList<>();
 
     public float getItemHorizontalSpace() {
         return mItemHorizontalSpace;
@@ -124,15 +126,18 @@ public class TextFlowLayout extends ViewGroup {
 
     /**
      * 配合上面被注释的代码使用
-     * @param itemView
      */
-    private void createNewLIne(View itemView) {
-        line = new ArrayList<>();
-        line.add(itemView);
-        lines.add(line);
+//    private void createNewLIne(View itemView) {
+//        line = new ArrayList<>();
+//        line.add(itemView);
+//        lines.add(line);
+//    }
+
+    public int getContentSize(){
+        return mTextList.size();
     }
 
-    //判断当前行能否继续添加
+   //判断当前行能否继续添加
     private boolean canBeAdd(View itemView, List<View> line) {
         //所有的已经添加的子View宽度 + (line.size + 1) * mItemHorizontalSpace + itemView.getMeasureWidth
         //若小于当前控件的宽度，则可以添加，否则不能添加
@@ -154,7 +159,11 @@ public class TextFlowLayout extends ViewGroup {
      * @param textList
      */
     public void setTextList(List<String> textList) {
-        for (String text : textList) {
+        removeAllViews();
+        this.mTextList.clear();
+        this.mTextList.addAll(textList);
+        Collections.reverse(mTextList);
+        for (String text : mTextList) {
             //LayoutInflater.from(getContext()).inflate(R.layout.flow_text_view, this, true);
             //上面一句等价于下面一句 + addView(item);
             TextView item = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.flow_text_view, this, false);

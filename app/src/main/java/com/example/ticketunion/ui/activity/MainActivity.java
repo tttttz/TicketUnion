@@ -18,7 +18,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements IMainActivity{
 
     private static final String TAG = "MainActivity";
 
@@ -27,8 +27,8 @@ public class MainActivity extends BaseActivity {
     //四个Fragment
     private HomeFragment mHomeFragment;
     private SelectedFragment mSelectFragment;
-    private OnSellFragment mRedPacket;
-    private SearchFragment mSearch;
+    private OnSellFragment mOnSellFragment;
+    private SearchFragment mSearchFragment;
     private FragmentManager mFragmentManager;
 
 
@@ -55,8 +55,8 @@ public class MainActivity extends BaseActivity {
     private void initFragment() {
         mHomeFragment = new HomeFragment();
         mSelectFragment = new SelectedFragment();
-        mRedPacket = new OnSellFragment();
-        mSearch = new SearchFragment();
+        mOnSellFragment = new OnSellFragment();
+        mSearchFragment = new SearchFragment();
         //得到FragmentManager
         mFragmentManager = getSupportFragmentManager();
         switchFragment(mHomeFragment);
@@ -82,11 +82,11 @@ public class MainActivity extends BaseActivity {
                         break;
                     case R.id.red_packet:
                         LogUtil.d(this, "切换到红包");
-                        switchFragment(mRedPacket);
+                        switchFragment(mOnSellFragment);
                         break;
                     case R.id.search:
                         LogUtil.d(this, "切换到搜索");
-                        switchFragment(mSearch);
+                        switchFragment(mSearchFragment);
                         break;
                     default:
                         break;
@@ -121,4 +121,9 @@ public class MainActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void switchToSearch() {
+        //switchFragment(mSearchFragment);
+        mNavigationView.setSelectedItemId(R.id.search);
+    }
 }
