@@ -2,6 +2,7 @@ package com.lcodecore.tkrefreshlayout.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -40,6 +41,8 @@ public class TbNestedScrollView extends NestedScrollView {
             this.mRecyclerView = (RecyclerView) target;
         }
         if(originScroll < mHeaderHeight) {
+            Log.d(TAG, "dx ==>" + dx);
+            Log.d(TAG, "dy ==>" + dy);
             scrollBy(dx,dy);
             consumed[0] = dx;
             consumed[1] = dy;

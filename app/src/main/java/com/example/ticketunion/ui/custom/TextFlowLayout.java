@@ -102,19 +102,6 @@ public class TextFlowLayout extends ViewGroup {
                 line = new ArrayList<>();
                 line.add(itemView);
             }
-//            if (line == null) {
-//                //若当前行为空
-//                createNewLIne(itemView);
-//            } else {
-//                //判断是否可以继续添加
-//                if (canBeAdd(itemView, line)) {
-//                    //可以添加
-//                    line.add(itemView);
-//                } else {
-//                    //新创建一行
-//                    createNewLIne(itemView);
-//                }
-//            }
         }
         lines.add(line);
         //测量自己
@@ -124,14 +111,7 @@ public class TextFlowLayout extends ViewGroup {
         setMeasuredDimension(mSelfWidth, selfHeight);
     }
 
-    /**
-     * 配合上面被注释的代码使用
-     */
-//    private void createNewLIne(View itemView) {
-//        line = new ArrayList<>();
-//        line.add(itemView);
-//        lines.add(line);
-//    }
+
 
     public int getContentSize(){
         return mTextList.size();

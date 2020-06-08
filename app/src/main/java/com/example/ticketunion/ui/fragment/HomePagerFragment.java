@@ -180,7 +180,7 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
             }
         });
 
-        //
+        //给NestedScrollView设置需要消费的滑动高度
         homePagerParent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {

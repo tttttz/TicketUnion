@@ -547,11 +547,14 @@ public class SearchResult {
                     }
 
                     public String getUrl() {
-                        return url;
+                        if (coupon_share_url == null || coupon_share_url.length() == 0) {
+                            return url;
+                        }
+                        return coupon_share_url;
                     }
 
                     public void setUrl(String url) {
-                        this.url = url;
+                        this.coupon_share_url = url;
                     }
 
                     public int getUser_type() {

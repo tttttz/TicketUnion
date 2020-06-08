@@ -51,6 +51,8 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
         mTabLayout.setupWithViewPager(homePager);
         mHomePagerAdapter = new HomePagerAdapter(getChildFragmentManager());
         homePager.setAdapter(mHomePagerAdapter);
+        homePager.setOffscreenPageLimit(5);
+
     }
 
     @Override
@@ -88,7 +90,9 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
     @Override
     protected void loadData() {
         //加载数据
-        mHomePresenter.getCategories();
+        if (mHomePresenter != null) {
+            mHomePresenter.getCategories();
+        }
     }
 
     @Override
